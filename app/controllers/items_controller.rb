@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @merchant = Merchant.find(params[:merchant_id])
+    @merchant = params[:merchant_id]
     @item = Item.find(params[:id])
   end
 
@@ -15,18 +15,18 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @merchant = Merchant.find(params[:merchant_id])
-    @item = Item.find(params[:id])
-    if @item.update(item_params)
+    item = Item.find(params[:id])
+    #It's possible there's a technique to update and find in one step
+    if item.update(item_params)
       flash[:notice] = "Item has been successfully updated"
       if params[:item][:status]
-        redirect_to merchant_items_path(@merchant)
+        redirect_to merchant_items_path(params[:merchant_id])
       else
-        redirect_to merchant_item_path(@merchant, @item)
+        redirect_to merchant_item_path(params[:merchant_id], item)
       end
     else
       flash[:alert] = "Please enter valid data"
-      redirect_to edit_merchant_item_path(@merchant, @item)
+      redirect_to edit_merchant_item_path(params[:merchant_id], item)
     end
   end
 
