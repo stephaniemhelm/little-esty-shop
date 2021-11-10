@@ -28,8 +28,12 @@
 If you would like to make changes to this project, please contact the owner of this repository via GitHub.
 
 ## Setup
+This project was developed via Ruby 2.7.2, on Rails 5.2.5.
 
-This project was developed via Ruby 2.7.2, on Rails 5.2.5. To access the dev environment for this app please follow these steps:
+**_Database Schema_**\
+![Database Schema](/app/assets/images/database_schema.png)
+
+To access the dev environment for this app please follow these steps:
 * Fork this repository
 * Clone your fork
 * From the command line, install gems and set up your DB:
@@ -38,6 +42,7 @@ This project was developed via Ruby 2.7.2, on Rails 5.2.5. To access the dev env
 
 You can access the test suite (includes use of Capybara, FactoryBot, Faker, RSpec, and Pry) via `bundle exec rspec`. You can run the development server
 with `rails s` to see the app in action.
+* Run `rake csv_load:all` to populate data from the Command Line to the rails server
 
 ## Contributors
 This app was developed via Ruby on Rails by students at Turing School of Software and Design in 2021.
