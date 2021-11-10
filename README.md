@@ -4,20 +4,24 @@
 
 ### Features: Merchants
 #### Tools created to make it easy for your merchants to manage inventory and customers
-Merchants can track items and invoices, and easily see favorite customers.
+**_Merchants can track items and invoices, and easily see favorite customers._**\
 ![Merchant Show Page](/app/assets/images/merchant_show.png)
-Merchants can track and change the status of their items with the click of a button.
+
+**_Merchants can track and change the status of their items with the click of a button._**\
 ![Merchant Items Page](/app/assets/images/merchant_items_show.png)
-Merchants can see individual items and update their attributes.
+
+**_Merchants can see individual items and update their attributes._**\
 ![Item Show Page](/app/assets/images/item_show.png)
 
 ### Features: Admins
 #### Tools created to support site administrators simplify the tasks associated with managing complex commerce.
-Admins can track merchants, invoices, and customers from a single central dashboard.
+**_Admins can track merchants, invoices, and customers from a single central dashboard._**\
 ![Admin Dashboard](/app/assets/images/admin_dashboard.png)
-With a simple click of a button, admins can enable or disable their merchants.
+
+**_With a simple click of a button, admins can enable or disable their merchants._**\
 ![Admin Merchants Show](/app/assets/images/admin_merchants_show.png)
-Admins can track individual invoices and statistics with ease.
+
+**_Admins can track individual invoices and statistics with ease._**\
 ![Admin Invoices Show](/app/assets/images/admin_invoice_show.png)
 
 ## Shipping Changes
