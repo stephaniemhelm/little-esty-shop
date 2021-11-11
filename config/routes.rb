@@ -1,8 +1,10 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  resources :merchants do
-    get 'dashboard', on: :member
+  root to: 'welcome#index'
+
+  resources :merchants, only: :index do
+    get '/dashboard', controller: :merchants, action: :show, as: 'dashboard'
     resources :items, except: [:delete]
     resources :invoices, only: [:index, :show]
     resources :invoice_items, only: :update
