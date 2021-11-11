@@ -11,12 +11,7 @@
 
 <body>
 
-  <%= @github_api.name_info %>
-  <%= @github_api.contributors_commits %>
-  <%= @github_api.pr_count %>
-
-
-
+  <%= render 'shared/footer' %>
 
     <% flash.each do |type, msg| %>
       <div>
