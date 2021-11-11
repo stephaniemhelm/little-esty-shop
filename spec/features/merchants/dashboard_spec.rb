@@ -64,7 +64,7 @@ RSpec.describe "merchant dashboard" do
     within("#ready-to-ship") do
       within("#invoice-#{@invoice1.id}") do
         expect(page).to have_content(@item.name)
-        expect(page).to have_content(@invoice1.created_at.strftime('%A, %B%e, %Y'))
+        expect(page).to have_content(@invoice1.created_at.strftime('%A, %B %e, %Y'))
 
         click_link(@invoice1.id)
 
@@ -76,6 +76,6 @@ RSpec.describe "merchant dashboard" do
   it 'the items ready to ship list is sorted from oldest to newest' do
     expect("(Invoice #{@invoice4.id})").to appear_before("(Invoice #{@invoice3.id})")
     expect("(Invoice #{@invoice2.id})").to appear_before("(Invoice #{@invoice1.id})")
-    
+
   end
 end
