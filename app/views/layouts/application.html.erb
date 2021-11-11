@@ -9,9 +9,15 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  
-
 <body>
+
+  <%= @github_api.name_info %>
+  <%= @github_api.contributors_commits %>
+  <%= @github_api.pr_count %>
+
+
+
+
     <% flash.each do |type, msg| %>
       <div>
         <%= msg %>

@@ -55,7 +55,7 @@ RSpec.describe "merchant's item index page" do
     expect(page).not_to have_content(@item7.name)
   end
 
-  it 'has names as links' do
+  it 'items names links to show page' do
     click_link(@item1.name, match: :first)
 
     expect(current_path).to eq(merchant_item_path(@merchant, @item1))
@@ -89,9 +89,9 @@ RSpec.describe "merchant's item index page" do
     end
   end
 
-  it 'has a link to create a new item' do 
+  it 'has a link to create a new item' do
     click_link "Create New Item"
 
     expect(current_path).to eq(new_merchant_item_path(@merchant))
-  end 
+  end
 end

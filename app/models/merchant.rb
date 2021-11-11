@@ -11,6 +11,8 @@ class Merchant < ApplicationRecord
     invoices
   end
 
+  #class method on transactions where transactions.result = success (merge?)
+
   def favorite_customers
     customers.joins(invoices: :transactions)
              .where('transactions.result = ?', 'success')
