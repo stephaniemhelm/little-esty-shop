@@ -26,15 +26,15 @@ class GithubService
   private
 
   def repo_name_info
-    @name = GithubClient.repo_info
+    GithubClient.repo_info
   end
 
   def repo_contributors_commits
-    @contributors_commits = GithubClient.repo_contributors
+    GithubClient.repo_contributors
   end
 
   def repo_pr_count
-    @pull_requests_count = GithubClient.pr_info
+    GithubClient.pr_info
   end
 
 

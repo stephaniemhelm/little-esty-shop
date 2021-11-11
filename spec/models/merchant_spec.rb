@@ -3,10 +3,14 @@ require 'rails_helper'
 RSpec.describe Merchant, type: :model do
   describe 'relationships' do
     it { should have_many :items }
+    it { should have_many(:invoice_items).through(:items) }
+    it { should have_many(:invoices).through(:invoice_items) }
+    it { should have_many(:customers).through(:invoices) }
   end
 
   describe 'validations' do
     it { should validate_presence_of(:name) }
+    it { should validate_presence_of(:status) }
   end
 
   describe 'model methods' do
@@ -245,6 +249,6 @@ RSpec.describe Merchant, type: :model do
       it 'returns all invoices for a merchant' do
         expect(@merchant.merchant_invoices).to eq(@merchant.invoices)
       end
-    end 
+    end
   end
 end
