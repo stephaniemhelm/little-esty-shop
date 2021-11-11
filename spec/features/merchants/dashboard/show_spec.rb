@@ -34,7 +34,7 @@ RSpec.describe "merchant dashboard" do
     @inv_item5 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice5.id}
     @inv_item6 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice6.id}
 
-    visit dashboard_merchant_path(@merchant)
+    visit merchant_dashboard_path(@merchant)
   end
 
   it 'can show name of merchant' do

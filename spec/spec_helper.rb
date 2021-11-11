@@ -12,13 +12,25 @@
 # the additional setup, and require it from the spec files that actually need
 # it.
 
+require 'webmock/rspec'
+WebMock.disable_net_connect!(allow_localhost: true)
 
 require 'simplecov'
 SimpleCov.start do
   add_filter "spec/rails_helper.rb"
+  add_filter "app/services"
 end
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
+  config.before(:each) do
+    allow(GithubService).to receive(:name_info).and_return('little-esty-shop-mocked')
+    allow(GithubService).to receive(:contributors_commits).and_return(['user1 with 10 commits.', 'user2 with 20 commits.', 'user3 with 30 commits.'])
+    allow(GithubService).to receive(:pr_count).and_return(12)
+  end
+  #   stub_request(:get, /api.github.com/).
+  #     with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+  #     to_return(status: 200, body: "stubbed response", headers: {})
+
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
   # assertions if you prefer.
@@ -98,4 +110,5 @@ RSpec.configure do |config|
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
+
 end

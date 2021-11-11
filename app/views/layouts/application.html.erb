@@ -11,8 +11,9 @@
 
 <body>
 
+  <%= render 'shared/navbar' %>
 
-  <%= render 'shared/footer' %>
+
 
     <% flash.each do |type, msg| %>
       <div>
@@ -21,5 +22,7 @@
     <% end %>
 
     <%= yield %>
+
+    <%= render 'shared/footer' %>  
   </body>
 </html>

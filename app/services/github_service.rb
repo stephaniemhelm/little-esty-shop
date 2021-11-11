@@ -14,7 +14,7 @@ class GithubService
     def contributors_commits
       repo_contributors_commits.filter_map do |contributor|
         if !TURING_STAFF.include?(contributor[:author][:login])
-          "#{contributor[:author][:login]} with #{contributor[:total]} commits"
+          "#{contributor[:author][:login]} with #{contributor[:total]} commits."
         end
       end
     end
