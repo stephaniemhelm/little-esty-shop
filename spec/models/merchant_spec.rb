@@ -29,6 +29,11 @@ RSpec.describe Merchant, type: :model do
       @customer6 = create :customer
 
       @item = create :item, { merchant_id: @merchant.id }
+      @item1 = create :item, { merchant_id: @merchant.id }
+      @item2 = create :item, { merchant_id: @merchant.id }
+      @item3 = create :item, { merchant_id: @merchant.id }
+      @item4 = create :item, { merchant_id: @merchant.id }
+      @item5 = create :item, { merchant_id: @merchant.id }
       @item7 = create :item, { merchant_id: @merchant1.id }
       @item8 = create :item, { merchant_id: @merchant1.id }
       @item9 = create :item, { merchant_id: @merchant2.id }
@@ -89,6 +94,79 @@ RSpec.describe Merchant, type: :model do
     describe 'top 5 merchants' do
       it 'lists top 5 merchants by revenue' do
         expect(Merchant.top_five_merchants).to eq([@merchant, @merchant3, @merchant1, @merchant2, @merchant4])
+      end
+    end
+
+    describe 'merchant_invoices' do
+      it 'returns invoices for a merchant' do
+        expect(@merchant.invoices.uniq).to eq([@invoice1,@invoice2,@invoice3,@invoice4,@invoice5,@invoice6])
+      end
+    end
+
+    describe 'merchant best day' do
+      it 'shows merchant best day' do
+        expect(@merchant.merchant_best_day).to eq(@invoice1.created_at.to_date)
+      end
+
+      it 'lists top 5 merchants by revenue' do
+        expect(Merchant.top_five_merchants).to eq([@merchant, @merchant3, @merchant1, @merchant2, @merchant4])
+      end
+    end
+
+    ###  TECHNICAL DEBT: this needs to be moved to item model test along with set-up. Or does it? Let's discuss.
+    describe '#item_best_day' do
+      it 'returns the date of the greatest number of sales for items' do
+        expect(@merchant1.top_five_items.first.item_best_day).to eq(DateTime.new(2021, 1, 5))
+      end
+    end
+
+    describe 'favorite_customers' do
+      it 'returns the top 5 customers' do
+        merchant = create(:merchant)
+        item1 = create :item, { merchant_id: merchant.id }
+        customer1 = create :customer
+        customer2 = create :customer
+        customer3 = create :customer
+        customer4 = create :customer
+        customer5 = create :customer
+        customer6 = create :customer
+        invoice1 = create :invoice, { customer_id: customer1.id }
+        invoice2 = create :invoice, { customer_id: customer2.id }
+        invoice3 = create :invoice, { customer_id: customer3.id }
+        invoice4 = create :invoice, { customer_id: customer4.id }
+        invoice5 = create :invoice, { customer_id: customer5.id }
+        invoice6 = create :invoice, { customer_id: customer6.id }
+        invoice1 = create :invoice, { customer_id: customer1.id }
+        invoice2 = create :invoice, { customer_id: customer2.id }
+        invoice3 = create :invoice, { customer_id: customer3.id }
+        invoice4 = create :invoice, { customer_id: customer4.id }
+        invoice5 = create :invoice, { customer_id: customer5.id }
+        invoice6 = create :invoice, { customer_id: customer6.id }
+        transaction1 = create :transaction, { invoice_id: invoice1.id, result: 'success' }
+        transaction2 = create :transaction, { invoice_id: invoice1.id, result: 'success' }
+        transaction3 = create :transaction, { invoice_id: invoice1.id, result: 'success' }
+        transaction4 = create :transaction, { invoice_id: invoice1.id, result: 'success' }
+        transaction5 = create :transaction, { invoice_id: invoice1.id, result: 'success' }
+        transaction6 = create :transaction, { invoice_id: invoice2.id, result: 'success' }
+        transaction7 = create :transaction, { invoice_id: invoice2.id, result: 'success' }
+        transaction8 = create :transaction, { invoice_id: invoice2.id, result: 'success' }
+        transaction9 = create :transaction, { invoice_id: invoice2.id, result: 'success' }
+        transaction10 = create :transaction, { invoice_id: invoice3.id, result: 'success' }
+        transaction11 = create :transaction, { invoice_id: invoice3.id, result: 'success' }
+        transaction12 = create :transaction, { invoice_id: invoice3.id, result: 'success' }
+        transaction13 = create :transaction, { invoice_id: invoice4.id, result: 'success' }
+        transaction14 = create :transaction, { invoice_id: invoice4.id, result: 'success' }
+        transaction15 = create :transaction, { invoice_id: invoice5.id, result: 'success' }
+        transaction16 = create :transaction, { invoice_id: invoice6.id, result: 'failed' }
+        inv_item1 = create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id, unit_price: 100, quantity: 5}
+        inv_item2 = create :invoice_item, { item_id: item1.id, invoice_id: invoice2.id, unit_price: 100, quantity: 4}
+        inv_item3 = create :invoice_item, { item_id: item1.id, invoice_id: invoice3.id, unit_price: 100, quantity: 3}
+        inv_item4 = create :invoice_item, { item_id: item1.id, invoice_id: invoice4.id, unit_price: 100, quantity: 2}
+        inv_item5 = create :invoice_item, { item_id: item1.id, invoice_id: invoice5.id, unit_price: 100, quantity: 1}
+
+        expected = {customer1.id => 5, customer2.id => 4, customer3.id => 3, customer4.id => 2, customer5.id => 1}
+
+        expect(merchant.favorite_customers). to eq(expected)
       end
     end
   end
@@ -166,88 +244,9 @@ RSpec.describe Merchant, type: :model do
       @inv_item15 = create :invoice_item, { item_id: @item11.id, invoice_id: @invoice12.id, unit_price: 1200, quantity: 7}
     end
 
-    describe 'merchant_invoices' do
-      it 'returns invoices for a merchant' do
-        expect(@merchant.merchant_invoices.uniq).to eq([@invoice1,@invoice2,@invoice3,@invoice4,@invoice5,@invoice6,@invoice7])
-      end
-    end
-
     describe '#top_five_items' do
       it 'returns the top five items by total revenue' do
-      expect(@merchant.top_five_items).to eq([@item1,@item2,@item3,@item4,@item5])
-      end
-    end
-
-    describe 'merchant best day' do
-      it 'shows merchant best day' do
-        expect(@merchant.merchant_best_day).to eq(@invoice1.created_at.to_date)
-      end
-
-      it 'lists top 5 merchants by revenue' do
-        expect(Merchant.top_five_merchants).to eq([@merchant, @merchant3, @merchant1, @merchant2, @merchant4])
-      end
-    end
-
-    ###  TECHNICAL DEBT: this needs to be moved to item model test along with set-up. Or does it? Let's discuss.
-    describe '#item_best_day' do
-      it 'returns the date of the greatest number of sales for items' do
-        expect(@merchant.top_five_items.first.item_best_day).to eq(DateTime.new(2021, 1, 3))
-      end
-    end
-
-    describe 'favorite_customers' do
-      it 'returns the top 5 customers' do
-        merchant = create(:merchant)
-        item1 = create :item, { merchant_id: merchant.id }
-        customer1 = create :customer
-        customer2 = create :customer
-        customer3 = create :customer
-        customer4 = create :customer
-        customer5 = create :customer
-        customer6 = create :customer
-        invoice1 = create :invoice, { customer_id: customer1.id }
-        invoice2 = create :invoice, { customer_id: customer2.id }
-        invoice3 = create :invoice, { customer_id: customer3.id }
-        invoice4 = create :invoice, { customer_id: customer4.id }
-        invoice5 = create :invoice, { customer_id: customer5.id }
-        invoice6 = create :invoice, { customer_id: customer6.id }
-        invoice1 = create :invoice, { customer_id: customer1.id }
-        invoice2 = create :invoice, { customer_id: customer2.id }
-        invoice3 = create :invoice, { customer_id: customer3.id }
-        invoice4 = create :invoice, { customer_id: customer4.id }
-        invoice5 = create :invoice, { customer_id: customer5.id }
-        invoice6 = create :invoice, { customer_id: customer6.id }
-        transaction1 = create :transaction, { invoice_id: invoice1.id, result: 'success' }
-        transaction2 = create :transaction, { invoice_id: invoice1.id, result: 'success' }
-        transaction3 = create :transaction, { invoice_id: invoice1.id, result: 'success' }
-        transaction4 = create :transaction, { invoice_id: invoice1.id, result: 'success' }
-        transaction5 = create :transaction, { invoice_id: invoice1.id, result: 'success' }
-        transaction6 = create :transaction, { invoice_id: invoice2.id, result: 'success' }
-        transaction7 = create :transaction, { invoice_id: invoice2.id, result: 'success' }
-        transaction8 = create :transaction, { invoice_id: invoice2.id, result: 'success' }
-        transaction9 = create :transaction, { invoice_id: invoice2.id, result: 'success' }
-        transaction10 = create :transaction, { invoice_id: invoice3.id, result: 'success' }
-        transaction11 = create :transaction, { invoice_id: invoice3.id, result: 'success' }
-        transaction12 = create :transaction, { invoice_id: invoice3.id, result: 'success' }
-        transaction13 = create :transaction, { invoice_id: invoice4.id, result: 'success' }
-        transaction14 = create :transaction, { invoice_id: invoice4.id, result: 'success' }
-        transaction15 = create :transaction, { invoice_id: invoice5.id, result: 'success' }
-        transaction16 = create :transaction, { invoice_id: invoice6.id, result: 'failed' }
-        inv_item1 = create :invoice_item, { item_id: item1.id, invoice_id: invoice1.id, unit_price: 100, quantity: 5}
-        inv_item2 = create :invoice_item, { item_id: item1.id, invoice_id: invoice2.id, unit_price: 100, quantity: 4}
-        inv_item3 = create :invoice_item, { item_id: item1.id, invoice_id: invoice3.id, unit_price: 100, quantity: 3}
-        inv_item4 = create :invoice_item, { item_id: item1.id, invoice_id: invoice4.id, unit_price: 100, quantity: 2}
-        inv_item5 = create :invoice_item, { item_id: item1.id, invoice_id: invoice5.id, unit_price: 100, quantity: 1}
-
-        expected = {customer1.id => 5, customer2.id => 4, customer3.id => 3, customer4.id => 2, customer5.id => 1}
-
-        expect(merchant.favorite_customers). to eq(expected)
-      end
-    end
-
-    describe 'merchant_invoices' do
-      it 'returns all invoices for a merchant' do
-        expect(@merchant.merchant_invoices).to eq(@merchant.invoices)
+      expect(@merchant.top_five_items).to eq([@item1, @item2, @item3, @item4, @item5])
       end
     end
   end
