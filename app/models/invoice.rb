@@ -4,6 +4,9 @@ class Invoice < ApplicationRecord
   has_many :invoice_items, dependent: :destroy
   has_many :items, through: :invoice_items
 
+  validates_presence_of :customer_id
+  validates_presence_of :status
+
   def self.in_progress
     where(status: 'in progress')
   end
