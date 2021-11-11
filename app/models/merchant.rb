@@ -5,6 +5,7 @@ class Merchant < ApplicationRecord
   has_many :customers, through: :invoices
 
   validates_presence_of :name
+  validates_presence_of :status
 
   # Do we need this method for anything? Can't we just call .invoices on a merchant?
   def merchant_invoices
