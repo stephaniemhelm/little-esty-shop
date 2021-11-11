@@ -14,4 +14,12 @@ RSpec.describe "admin merchant edit" do
     expect(page).to have_content("Stephanie's Shop")
     expect(page).to have_content("Merchant has been updated.")
   end
+
+  it 'flashes error message and redirects' do
+    fill_in 'Name', with: ""
+    click_button "Submit"
+
+    expect(current_path).to eq(edit_admin_merchant_path(@merchant))
+    expect(page).to have_content("Please enter a valid name")
+  end
 end

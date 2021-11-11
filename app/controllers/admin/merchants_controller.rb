@@ -29,7 +29,7 @@ class Admin::MerchantsController < ApplicationController
       end
     else
       flash[:alert] = "Please enter a valid name"
-      redirect_to admin_merchant_path(merchant)
+      redirect_to edit_admin_merchant_path(merchant)
     end
   end
 

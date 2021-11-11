@@ -99,7 +99,7 @@ RSpec.describe Merchant, type: :model do
 
     describe 'merchant_invoices' do
       it 'returns invoices for a merchant' do
-        expect(@merchant.merchant_invoices.uniq).to eq([@invoice1,@invoice2,@invoice3,@invoice4,@invoice5,@invoice6])
+        expect(@merchant.invoices.uniq).to eq([@invoice1,@invoice2,@invoice3,@invoice4,@invoice5,@invoice6])
       end
     end
 
@@ -117,12 +117,6 @@ RSpec.describe Merchant, type: :model do
     describe '#item_best_day' do
       it 'returns the date of the greatest number of sales for items' do
         expect(@merchant1.top_five_items.first.item_best_day).to eq(DateTime.new(2021, 1, 5))
-      end
-    end
-
-    describe 'merchant_invoices' do
-      it 'returns all invoices for a merchant' do
-        expect(@merchant.merchant_invoices).to eq(@merchant.invoices)
       end
     end
 

@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
 
-  def index
-    @github_api = GithubService.new
-  end
+  # def index
+  #   @github_api = GithubService.new
+  # end
 
 end

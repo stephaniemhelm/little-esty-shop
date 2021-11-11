@@ -64,7 +64,7 @@ RSpec.describe "admin dashboard" do
     within("#incomplete_invoices") do
       within("#invoice-#{@invoice1.id}") do
         expect(page).to have_content(@invoice1.id)
-        expect(page).to have_content(@invoice1.created_at.strftime('%A, %B%e, %Y'))
+        expect(page).to have_content(@invoice1.created_at.strftime('%A, %B %e, %Y'))
         click_link(@invoice1.id)
         expect(current_path).to eq(admin_invoice_path(@invoice1))
       end
