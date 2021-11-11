@@ -103,12 +103,6 @@ RSpec.describe Merchant, type: :model do
       end
     end
 
-    describe '#top_five_items' do
-      it 'returns the top five items by total revenue' do
-      expect(@merchant.top_five_items).to eq([])
-      end
-    end
-
     describe 'merchant best day' do
       it 'shows merchant best day' do
         expect(@merchant.merchant_best_day).to eq(@invoice1.created_at.to_date)
@@ -256,14 +250,10 @@ RSpec.describe Merchant, type: :model do
       @inv_item15 = create :invoice_item, { item_id: @item11.id, invoice_id: @invoice12.id, unit_price: 1200, quantity: 7}
     end
 
-
-
-
-
-
-
-
-
-
+    describe '#top_five_items' do
+      it 'returns the top five items by total revenue' do
+      expect(@merchant.top_five_items).to eq([@item1, @item2, @item3, @item4, @item5])
+      end
+    end
   end
 end
