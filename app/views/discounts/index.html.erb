@@ -1,3 +1,16 @@
+<h1>Bulk Discounts: <%= @merchant.name %></h1>
+
+<p><b><% @discounts.each do |discount| %>
+<p><b>Discount Percentage: <%= discount.percentage %>% <br>
+<p><b>Quantity Threshold: <%= discount.quantity_threshold %> <br>
+
+<%= link_to "Bulk Discount", merchant_discounts_path(@merchant, @discount)%><br>
+
+<% end %>
+
+
+
+
 <% @holidays.each do |holiday| %>
   <%= holiday[:name] %>
   <%= holiday[:date] %>
