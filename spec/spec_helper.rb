@@ -14,6 +14,7 @@
 
 require 'webmock/rspec'
 WebMock.disable_net_connect!(allow_localhost: true)
+WebMock.allow_net_connect!
 
 require 'simplecov'
 SimpleCov.start do
@@ -23,13 +24,27 @@ end
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 RSpec.configure do |config|
   config.before(:each) do
-    allow(GithubService).to receive(:name_info).and_return('little-esty-shop-mocked')
-    allow(GithubService).to receive(:contributors_commits).and_return(['user1 with 10 commits.', 'user2 with 20 commits.', 'user3 with 30 commits.'])
-    allow(GithubService).to receive(:pr_count).and_return(12)
+  #   allow(HolidayService).to receive(holiday_data[:name]).and_return('Thanksgiving Mock', 'Christmas Mock', 'New Year Mock')
+  #   allow(HolidayService).to receive(holiday_data[:name]).and_return('November Mock', 'December Mock', 'January Mock')
+  #
+  #
+      allow(GithubService).to receive(:name_info).and_return('little-esty-shop-mocked')
+      allow(GithubService).to receive(:contributors_commits).and_return(['user1 with 10 commits.', 'user2 with 20 commits.', 'user3 with 30 commits.'])
+      allow(GithubService).to receive(:pr_count).and_return(12)
   end
-  #   stub_request(:get, /api.github.com/).
-  #     with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
-  #     to_return(status: 200, body: "stubbed response", headers: {})
+  #   stub_request(:get, "https://date.nager.at/api/v2/NextPublicHolidays/US").
+  #       with(
+  #         headers: {
+  #           'Accept'=>'*/*',
+  #           'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+  #           'User-Agent'=>'Faraday v1.8.0'
+  #           }).
+  #      to_return(status: 200, body: "", headers: {})
+
+
+    # stub_request(:get, /api.github.com/).
+    #   with(headers: {'Accept'=>'*/*', 'User-Agent'=>'Ruby'}).
+    #   to_return(status: 200, body: "stubbed response", headers: {})
 
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest

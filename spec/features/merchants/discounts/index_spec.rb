@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'discounts index page' do
   before do
+    WebMock.allow_net_connect!
     @merchant = create(:merchant)
 
     @discount1 = Discount.create!(percentage: 20, quantity_threshold: 10, merchant_id: @merchant.id)
@@ -41,8 +42,12 @@ RSpec.describe 'discounts index page' do
     visit merchant_discounts_path(@merchant)
   end
 
+  it 'when I visit a merchants discount page' do
+    expect(current_path).to eq(merchant_discounts_path(@merchant))
+  end
+
   it 'shows all bulk discounts, including percentage and quantity' do
-    expect(page).to have_content(@merchant.name)
+    #expect(page).to have_content(@merchant.name)
     expect(page).to have_content(@discount1.percentage)
     expect(page).to have_content(@discount1.quantity_threshold)
     expect(page).to have_content(@discount2.percentage)
@@ -52,12 +57,15 @@ RSpec.describe 'discounts index page' do
   end
 
   it 'can link to bulk discounts show page' do
-    click_link "Bulk Discount"
-    expect(path).to eq(merchant_discounts_path(@merchant, @discount))
+    within("#discount-#{@discount1.id}") do
+      click_link "Bulk Discount"
+      expect(path).to eq(merchant_discounts_path(@merchant, @discount1))
+    end
   end
 
-  it 'can create a new bulk discount' do
-
+  it 'can link to create a new bulk discount' do
+    click_link "Create New Discount"
+    expect(path).to eq(new_merchant_discount_path(@merchant))
   end
 end
 
