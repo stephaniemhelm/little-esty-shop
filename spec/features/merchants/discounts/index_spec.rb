@@ -47,7 +47,7 @@ RSpec.describe 'discounts index page' do
   end
 
   it 'shows all bulk discounts, including percentage and quantity' do
-    #expect(page).to have_content(@merchant.name)
+    expect(page).to have_content(@merchant.name)
     expect(page).to have_content(@discount1.percentage)
     expect(page).to have_content(@discount1.quantity_threshold)
     expect(page).to have_content(@discount2.percentage)
@@ -80,12 +80,3 @@ end
 # Where I see all of my bulk discounts including their
 # percentage discount and quantity thresholds
 # And each bulk discount listed includes a link to its show page
-
-# As a merchant
-# When I visit my bulk discounts index
-# Then I see a link to create a new discount
-# When I click this link
-# Then I am taken to a new page where I see a form to add a new bulk discount
-# When I fill in the form with valid data
-# Then I am redirected back to the bulk discount index
-# And I see my new bulk discount listed

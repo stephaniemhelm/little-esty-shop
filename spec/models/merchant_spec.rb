@@ -6,6 +6,8 @@ RSpec.describe Merchant, type: :model do
     it { should have_many(:invoice_items).through(:items) }
     it { should have_many(:invoices).through(:invoice_items) }
     it { should have_many(:customers).through(:invoices) }
+    it { should have_many(:discounts) }
+
   end
 
   describe 'validations' do
@@ -20,6 +22,11 @@ RSpec.describe Merchant, type: :model do
       @merchant2 = create(:merchant)
       @merchant3 = create(:merchant)
       @merchant4 = create(:merchant)
+
+      @discount1 = Discount.create!(percentage: 20, quantity_threshold: 10, merchant_id: @merchant.id)
+      @discount2 = Discount.create!(percentage: 30, quantity_threshold: 15, merchant_id: @merchant.id)
+      @discount3 = Discount.create!(percentage: 15, quantity_threshold: 15, merchant_id: @merchant.id)
+
 
       @customer1 = create :customer
       @customer2 = create :customer
@@ -100,6 +107,12 @@ RSpec.describe Merchant, type: :model do
     describe 'merchant_invoices' do
       it 'returns invoices for a merchant' do
         expect(@merchant.invoices.uniq).to eq([@invoice1,@invoice2,@invoice3,@invoice4,@invoice5,@invoice6])
+      end
+    end
+
+    describe 'merchant discounts' do
+      it 'returns discounts for a merchant' do
+        expect(@merchant.merchant_discounts).to eq([@discount1, @discount2, @discount3])
       end
     end
 
