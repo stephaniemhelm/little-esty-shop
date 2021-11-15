@@ -35,7 +35,8 @@ class DiscountsController < ApplicationController
 
   def destroy
     @merchant = Merchant.find(params[:merchant_id])
-    discount = Discount.find(discount_params)
+    discount = Discount.find(discount_params[:id])
+    #require "pry"; binding.pry
     discount.destroy
     redirect_to merchant_discounts_path(@merchant)
   end
@@ -43,7 +44,7 @@ class DiscountsController < ApplicationController
   private
 
     def discount_params
-      params.permit(:percentage, :quantity_threshold, :merchant_id)
+      params.permit(:id,:percentage, :quantity_threshold, :merchant_id)
     end
 
 end

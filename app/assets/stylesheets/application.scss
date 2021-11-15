@@ -23,3 +23,22 @@
  .nav-item {
    padding-right: 15px;
  }
+
+ body {
+   display: flex;
+   min-height: 100vh;
+   flex-direction: column;
+
+   color: #000000;
+
+
+   background-image: url(https://wallpapercave.com/wp/wp3269246.jpg);
+   background-repeat: repeat;
+   background-attachment: fixed;
+   background-position: center;
+   -webkit-background-size: cover;
+   -moz-background-size: cover;
+   background-size: cover;
+   -o-background-size: cover;
+   height: 100%;
+ }
