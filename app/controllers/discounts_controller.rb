@@ -22,7 +22,7 @@ class DiscountsController < ApplicationController
     if discount.save
       redirect_to merchant_discounts_path(@merchant)
     else
-      flash[:alert] = "Please enter a valid information"
+      flash[:notice] = "Please enter a valid information"
       render :new
     end
   end
@@ -35,13 +35,16 @@ class DiscountsController < ApplicationController
   def update
     @merchant = Merchant.find(params[:merchant_id])
     @discount = Discount.find(params[:id])
-    @discount.update(discount_params)
+    #@discount.update(discount_params)
 
-    if @discount.save
+    if @discount.update(discount_params)
+      #require "pry"; binding.pry
+      flash[:notice] = "Discount has been updated."
       redirect_to merchant_discount_path(@merchant, @discount)
     else
       flash[:alert] = "Please enter a valid information"
-      render :update
+      #redirect_to edit_merchant_discount_path(@merchant, @discount)
+      #render :edit
     end
   end
 
@@ -55,7 +58,7 @@ class DiscountsController < ApplicationController
   private
 
     def discount_params
-      params.permit(:id,:percentage, :quantity_threshold, :merchant_id)
+      params.permit(:id, :percentage, :quantity_threshold, :merchant_id)
     end
 
 end

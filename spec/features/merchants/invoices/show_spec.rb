@@ -5,6 +5,10 @@ RSpec.describe 'merchant invoice show page' do
     @merchant1 = create(:merchant)
     @merchant2 = create(:merchant)
 
+    @discount1 = Discount.create!(percentage: 20, quantity_threshold: 10, merchant_id: @merchant.id)
+    @discount2 = Discount.create!(percentage: 30, quantity_threshold: 15, merchant_id: @merchant.id)
+    @discount3 = Discount.create!(percentage: 15, quantity_threshold: 5, merchant_id: @merchant.id)
+
     @item1 = create :item, { merchant_id: @merchant1.id }
     @item2 = create :item, { merchant_id: @merchant1.id }
     @item3 = create :item, { merchant_id: @merchant2.id }
@@ -57,4 +61,15 @@ RSpec.describe 'merchant invoice show page' do
       expect(find_field(:invoice_item_status).value).to eq('packaged')
     end
   end
+
+  it 'can show total discounted revenue' do
+
+
+  end 
 end
+
+
+# As a merchant
+# When I visit my merchant invoice show page
+# Then I see the total revenue for my merchant from this invoice (not including discounts)
+# And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation

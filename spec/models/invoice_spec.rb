@@ -18,6 +18,10 @@ RSpec.describe Invoice, type: :model do
       @merchant = create(:merchant)
       @merchant2 = create(:merchant)
 
+      @discount1 = Discount.create!(percentage: 20, quantity_threshold: 10, merchant_id: @merchant.id)
+      @discount2 = Discount.create!(percentage: 30, quantity_threshold: 15, merchant_id: @merchant.id)
+      @discount3 = Discount.create!(percentage: 15, quantity_threshold: 5, merchant_id: @merchant.id)
+
       @customer1 = create :customer
       @customer2 = create :customer
       @customer3 = create :customer
@@ -72,6 +76,11 @@ RSpec.describe Invoice, type: :model do
       it 'caluclates total revenue for an invoice' do
         expect(@invoice1.total_invoice_revenue(@invoice1.id)).to eq(600)
       end
+    end
+
+    xit 'can calculate total invoice revenue with bulk discount' do
+
+
     end
   end
 end
