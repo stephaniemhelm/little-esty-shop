@@ -4,6 +4,9 @@ RSpec.describe InvoiceItem, type: :model do
   describe 'relationships' do
     it { should belong_to(:item) }
     it { should belong_to(:invoice) }
+    it { should have_many(:merchants).through(:item) }
+    it { should have_many(:discounts).through(:merchants) }
+
   end
 
   describe 'validations' do
@@ -15,8 +18,13 @@ RSpec.describe InvoiceItem, type: :model do
   end
 
   describe 'model methods' do
+    WebMock.allow_net_connect!
     before do
       @merchant = create(:merchant)
+
+      @discount1 = Discount.create!(percentage: 20, quantity_threshold: 10, merchant_id: @merchant.id)
+      @discount2 = Discount.create!(percentage: 30, quantity_threshold: 15, merchant_id: @merchant.id)
+      @discount3 = Discount.create!(percentage: 15, quantity_threshold: 5, merchant_id: @merchant.id)
 
       @customer1 = create :customer
       @customer2 = create :customer
@@ -51,6 +59,10 @@ RSpec.describe InvoiceItem, type: :model do
 
     it 'returns incomplete invoices' do
       expect(InvoiceItem.incomplete_inv).to eq([@inv_item1, @inv_item2, @inv_item3, @inv_item4, @inv_item5])
+    end
+
+    it 'can return the best discount' do
+      expect(@inv_item1.best_discount).to eq(@discount2)
     end
   end
 end
