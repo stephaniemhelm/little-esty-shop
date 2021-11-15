@@ -22,4 +22,13 @@ class InvoiceItem < ApplicationRecord
               .first
   end
 
+  def invoice_item_total
+    (quantity * unit_price)
+  end
+
+  def invoice_item_total_with_discount
+    #require "pry"; binding.pry
+    total = ((invoice_item_total * best_discount.percentage) - invoice_item_total) / 100
+  end
+
 end

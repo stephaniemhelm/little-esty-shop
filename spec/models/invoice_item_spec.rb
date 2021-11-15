@@ -64,5 +64,14 @@ RSpec.describe InvoiceItem, type: :model do
     it 'can return the best discount' do
       expect(@inv_item1.best_discount).to eq(@discount2)
     end
+
+    it 'can calculate a total for invoice item' do
+      expect(@inv_item1.invoice_item_total).to eq(@inv_item1.quantity * @inv_item1.unit_price)
+    end
+
+    it 'can caluate invoice item total with the discount' do
+      expect(@inv_item1.invoice_item_total_with_discount).to eq(2843499)
+    end
+
   end
 end

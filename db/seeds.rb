@@ -10,9 +10,9 @@ require 'factory_bot_rails'
       merchant = FactoryBot.create :merchant
       merchant2 = FactoryBot.create :merchant
 
-      discount1 = Discount.create!(percentage: 20, quantity_threshold: 10, merchant_id: @merchant.id)
-      discount2 = Discount.create!(percentage: 30, quantity_threshold: 15, merchant_id: @merchant.id)
-      discount3 = Discount.create!(percentage: 15, quantity_threshold: 5, merchant_id: @merchant.id)
+      discount1 = Discount.create!(percentage: 20, quantity_threshold: 10, merchant_id: merchant.id)
+      discount2 = Discount.create!(percentage: 30, quantity_threshold: 15, merchant_id: merchant.id)
+      discount3 = Discount.create!(percentage: 15, quantity_threshold: 5, merchant_id: merchant.id)
 
 
       customer = FactoryBot.create :customer
