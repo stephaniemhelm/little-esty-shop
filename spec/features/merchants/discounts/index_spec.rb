@@ -6,8 +6,8 @@ RSpec.describe 'discounts index page' do
     @merchant = create(:merchant)
 
     @discount1 = Discount.create!(percentage: 20, quantity_threshold: 10, merchant_id: @merchant.id)
-    @discount2 = Discount.create!(percentage: 30, quantity_threshold: 18, merchant_id: @merchant.id)
-    @discount3 = Discount.create!(percentage: 15, quantity_threshold: 15, merchant_id: @merchant.id)
+    @discount2 = Discount.create!(percentage: 30, quantity_threshold: 15, merchant_id: @merchant.id)
+    @discount3 = Discount.create!(percentage: 15, quantity_threshold: 5, merchant_id: @merchant.id)
 
     @customer1 = create :customer
     @customer2 = create :customer

@@ -10,6 +10,11 @@ require 'factory_bot_rails'
       merchant = FactoryBot.create :merchant
       merchant2 = FactoryBot.create :merchant
 
+      discount1 = Discount.create!(percentage: 20, quantity_threshold: 10, merchant_id: @merchant.id)
+      discount2 = Discount.create!(percentage: 30, quantity_threshold: 15, merchant_id: @merchant.id)
+      discount3 = Discount.create!(percentage: 15, quantity_threshold: 5, merchant_id: @merchant.id)
+
+
       customer = FactoryBot.create :customer
 
       invoice1 = FactoryBot.create :invoice, { customer_id: customer.id }
@@ -26,29 +31,3 @@ require 'factory_bot_rails'
                               { invoice_id: invoice2.id, item_id: item2.id, unit_price: 100, quantity: 1 }
       invoice_item3 = FactoryBot.create :invoice_item,
                               { invoice_id: invoice3.id, item_id: item3.id, unit_price: 200, quantity: 1 }
-
-
-
-# 5.times do
-#   FactoryBot.create(:merchant)
-# end
-#
-# 5.times do
-#   FactoryBot.create(:customer)
-# end
-#
-# 5.times do
-#   FactoryBot.create(:invoice)
-# end
-#
-# 5.times do
-#   FactoryBot.create(:item)
-# end
-#
-# 5.times do
-#   FactoryBot.create(:invoice_item)
-# end
-#
-# 5.times do
-#   FactoryBot.create(:transaction)
-# end

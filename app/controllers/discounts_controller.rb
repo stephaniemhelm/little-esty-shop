@@ -13,8 +13,6 @@ class DiscountsController < ApplicationController
 
   def new
     @merchant = Merchant.find(params[:merchant_id])
-    #@discount = Discount.new
-    #require "pry"; binding.pry
   end
 
   def create
@@ -30,13 +28,26 @@ class DiscountsController < ApplicationController
   end
 
   def edit
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = Discount.find(params[:id])
+  end
 
+  def update
+    @merchant = Merchant.find(params[:merchant_id])
+    @discount = Discount.find(params[:id])
+    @discount.update(discount_params)
+
+    if @discount.save
+      redirect_to merchant_discount_path(@merchant, @discount)
+    else
+      flash[:alert] = "Please enter a valid information"
+      render :update
+    end
   end
 
   def destroy
     @merchant = Merchant.find(params[:merchant_id])
     discount = Discount.find(discount_params[:id])
-    #require "pry"; binding.pry
     discount.destroy
     redirect_to merchant_discounts_path(@merchant)
   end

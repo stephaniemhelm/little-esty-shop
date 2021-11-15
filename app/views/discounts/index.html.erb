@@ -3,22 +3,22 @@
 <p><b><% @discounts.each do |discount| %>
 
   <div id="discount-<%= "#{discount.id}" %>">
-
     <p><b>Discount Percentage: <%= discount.percentage %>% <br>
     <p><b>Quantity Threshold: <%= discount.quantity_threshold %> <br><br>
     <%= link_to "Bulk Discount", merchant_discount_path(@merchant, discount)%><br>
     <%= link_to "Delete Discount", merchant_discount_path(@merchant, discount), method: :delete %><br>
-
   </div>
 <% end %>
 <hr>
+
 <%= link_to "Create New Discount", new_merchant_discount_path(@merchant)%><br><br>
 
-
-
+<hr>
 
 <p>Upcoming Holidays:</p>
 <% @holidays.each do |holiday| %>
   <%= holiday[:name] %>
   <%= holiday[:date] %>
 <% end %>
+
+<hr>
