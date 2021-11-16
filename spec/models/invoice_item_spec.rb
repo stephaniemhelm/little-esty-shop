@@ -49,7 +49,7 @@ RSpec.describe InvoiceItem, type: :model do
       @transaction5 = create :transaction, { invoice_id: @invoice5.id, result: 'success' }
       @transaction6 = create :transaction, { invoice_id: @invoice6.id, result: 'failed' }
 
-      @inv_item1 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice1.id, status: "pending"}
+      @inv_item1 = create :invoice_item, { item_id: @item.id, quantity: 15, unit_price: 200, invoice_id: @invoice1.id, status: "pending"}
       @inv_item2 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice2.id, status: "pending"}
       @inv_item3 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice3.id, status: "pending"}
       @inv_item4 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice4.id, status: "packaged"}
@@ -65,13 +65,12 @@ RSpec.describe InvoiceItem, type: :model do
       expect(@inv_item1.best_discount).to eq(@discount2)
     end
 
-    xit 'can calculate a total for invoice item' do
-      expect(@inv_item1.invoice_item_total).to eq(@inv_item1.quantity * @inv_item1.unit_price)
+    it 'can calculate a total for invoice item' do
+      expect(@inv_item1.invoice_item_total).to eq(3000)
     end
 
-    xit 'can caluate invoice item total with the discount' do
-      expect(@inv_item1.invoice_item_total_with_discount).to eq(2843499)
+    it 'can caluate invoice item total with the discount' do
+      expect(@inv_item1.invoice_item_total_with_discount).to eq(2100)
     end
-
   end
 end

@@ -15,7 +15,6 @@ class InvoiceItem < ApplicationRecord
   end
 
   def best_discount
-    #require "pry"; binding.pry
       discounts.joins(:items)
               .order(percentage: :desc)
               .where('quantity_threshold <= ?', "#{self.quantity}")
@@ -27,8 +26,7 @@ class InvoiceItem < ApplicationRecord
   end
 
   def invoice_item_total_with_discount
-    #require "pry"; binding.pry
-    total = ((invoice_item_total * best_discount.percentage) - invoice_item_total) / 100
+    invoice_item_total - (invoice_item_total * (best_discount.percentage.to_f / 100))
   end
 
 end
