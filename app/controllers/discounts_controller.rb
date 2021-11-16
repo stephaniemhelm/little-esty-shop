@@ -35,16 +35,12 @@ class DiscountsController < ApplicationController
   def update
     @merchant = Merchant.find(params[:merchant_id])
     @discount = Discount.find(params[:id])
-    #@discount.update(discount_params)
-
-    if @discount.update(discount_params)
-      #require "pry"; binding.pry
+    if discount_params[:percentage].to_i > 0 && discount_params[:quantity_threshold].to_i > 0 && @discount.update(discount_params)
       flash[:notice] = "Discount has been updated."
-      redirect_to merchant_discount_path(@merchant, @discount)
+      redirect_to merchant_discounts_path(@merchant)
     else
       flash[:alert] = "Please enter a valid information"
-      #redirect_to edit_merchant_discount_path(@merchant, @discount)
-      #render :edit
+      redirect_to edit_merchant_discount_path(@merchant, @discount)
     end
   end
 
