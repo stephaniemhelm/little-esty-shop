@@ -78,16 +78,12 @@ RSpec.describe Invoice, type: :model do
       end
     end
 
-    xit 'can calculate total invoice revenue with bulk discount' do
-      expect(@invoice1.total_invoice_revenue_with_bulk_discounts(@invoice1.id)).to eq(450)
+    it 'caluclates total revenue for an invoice' do
+      expect(@invoice1.total_invoice_revenue_by_item).to eq(600)
+    end
 
+    it 'can calculate total invoice revenue with bulk discount' do
+      expect(@invoice1.total_invoice_revenue_with_bulk_discounts).to eq(600)
     end
   end
 end
-
-#Merchant Invoice Show Page: Total Revenue and Discounted Revenue
-
-# As a merchant
-# When I visit my merchant invoice show page
-# Then I see the total revenue for my merchant from this invoice (not including discounts)
-# And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation

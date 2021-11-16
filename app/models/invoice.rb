@@ -27,8 +27,15 @@ class Invoice < ApplicationRecord
                  .sum("invoice_items.unit_price * invoice_items.quantity")
   end
 
-  def total_invoice_revenue_with_bulk_discounts(invoice_id)
-    #require "pry"; binding.pry
+  def total_invoice_revenue_by_item
+    invoice_items.sum do |inv_item|
+      inv_item.invoice_item_total
+    end
+  end
 
+  def total_invoice_revenue_with_bulk_discounts
+    invoice_items.sum do |inv_item|
+      inv_item.invoice_item_total_with_discount
+    end
   end
 end
