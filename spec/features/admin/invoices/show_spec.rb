@@ -4,6 +4,10 @@ RSpec.describe "admin invoice show" do
   before do
     @merchant = create(:merchant)
 
+    @discount1 = Discount.create!(percentage: 20, quantity_threshold: 10, merchant_id: @merchant.id)
+    @discount2 = Discount.create!(percentage: 30, quantity_threshold: 15, merchant_id: @merchant.id)
+    @discount3 = Discount.create!(percentage: 15, quantity_threshold: 5, merchant_id: @merchant.id)
+
     @customer3 = create :customer
 
     @item7 = create :item, { merchant_id: @merchant.id }
@@ -53,5 +57,10 @@ RSpec.describe "admin invoice show" do
 
   it 'shows total revenue for an invoice' do
     expect(@invoice8.total_invoice_revenue(@invoice8.id)).to eq(58000)
+  end
+
+  it 'shows total discounted revenue for this invoice' do
+    expect(@invoice8.total_invoice_revenue_with_bulk_discounts).to eq(55300)
+
   end
 end
