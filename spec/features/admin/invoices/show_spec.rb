@@ -50,4 +50,8 @@ RSpec.describe "admin invoice show" do
       expect(find_field(:invoice_item_status).value).to eq("shipped")
     end
   end
+
+  it 'shows total revenue for an invoice' do
+    expect(@invoice8.total_invoice_revenue(@invoice8.id)).to eq(58000)
+  end
 end

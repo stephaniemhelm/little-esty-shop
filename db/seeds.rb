@@ -25,9 +25,18 @@ require 'factory_bot_rails'
       item2 = FactoryBot.create :item, { merchant_id: merchant.id }
       item3 = FactoryBot.create :item, { merchant_id: merchant2.id }
 
+
+
+
       invoice_item1 = FactoryBot.create :invoice_item,
-                              { invoice_id: invoice1.id, item_id: item1.id, unit_price: 50, quantity: 1 }
+                              { invoice_id: invoice1.id, item_id: item1.id, unit_price: 700, quantity: 15 }
       invoice_item2 = FactoryBot.create :invoice_item,
-                              { invoice_id: invoice2.id, item_id: item2.id, unit_price: 100, quantity: 1 }
+                              { invoice_id: invoice2.id, item_id: item2.id, unit_price: 1000, quantity: 10 }
       invoice_item3 = FactoryBot.create :invoice_item,
-                              { invoice_id: invoice3.id, item_id: item3.id, unit_price: 200, quantity: 1 }
+                              { invoice_id: invoice3.id, item_id: item3.id, unit_price: 2000, quantity: 20 }
+      invoice_item4 = FactoryBot.create :invoice_item,
+                              { invoice_id: invoice1.id, item_id: item2.id, unit_price: 1000, quantity: 10 }
+      invoice_item5 = FactoryBot.create :invoice_item,
+                              { invoice_id: invoice2.id, item_id: item3.id, unit_price: 2000, quantity: 20 }
+      invoice_item6 = FactoryBot.create :invoice_item,
+                              { invoice_id: invoice3.id, item_id: item1.id, unit_price: 700, quantity: 15 }
