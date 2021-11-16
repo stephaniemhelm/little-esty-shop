@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'merchant invoice show page' do
   before do
+    @merchant = create(:merchant)
     @merchant1 = create(:merchant)
     @merchant2 = create(:merchant)
 
@@ -62,10 +63,10 @@ RSpec.describe 'merchant invoice show page' do
     end
   end
 
-  it 'can show total discounted revenue' do
+  xit 'can show total discounted revenue' do
 
 
-  end 
+  end
 end
 
 

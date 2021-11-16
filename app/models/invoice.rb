@@ -28,7 +28,7 @@ class Invoice < ApplicationRecord
   end
 
   def total_invoice_revenue_with_bulk_discounts(invoice_id)
-    require "pry"; binding.pry
-    
+    #require "pry"; binding.pry
+
   end
 end
