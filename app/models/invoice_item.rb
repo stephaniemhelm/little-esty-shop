@@ -15,7 +15,7 @@ class InvoiceItem < ApplicationRecord
   end
 
   def best_discount
-      test = discounts.joins(:items)
+      discounts.joins(:items)
               .order(percentage: :desc)
               .where('quantity_threshold <= ?', "#{self.quantity}")
               .first

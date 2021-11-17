@@ -48,15 +48,15 @@ RSpec.describe Invoice, type: :model do
       @transaction5 = create :transaction, { invoice_id: @invoice5.id, result: 'success' }
       @transaction6 = create :transaction, { invoice_id: @invoice6.id, result: 'failed' }
 
-      @inv_item1 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice1.id, unit_price: 100, quantity: 1 }
+      @inv_item1 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice1.id, unit_price: 200, quantity: 15 }
       @inv_item2 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice2.id}
       @inv_item3 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice3.id}
       @inv_item4 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice4.id}
       @inv_item5 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice5.id}
       @inv_item6 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice6.id}
-      @inv_item7 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice1.id, unit_price: 100, quantity: 1 }
-      @inv_item8 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice1.id, unit_price: 100, quantity: 3 }
-      @inv_item9 = create :invoice_item, { item_id: @item4.id, invoice_id: @invoice1.id, unit_price: 100, quantity: 1 }
+      @inv_item7 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice1.id, unit_price: 1000, quantity: 10 }
+      @inv_item8 = create :invoice_item, { item_id: @item.id, invoice_id: @invoice1.id, unit_price: 400, quantity: 5 }
+      @inv_item9 = create :invoice_item, { item_id: @item4.id, invoice_id: @invoice1.id, unit_price: 750, quantity: 20 }
 
     end
 
@@ -69,21 +69,22 @@ RSpec.describe Invoice, type: :model do
     end
 
     describe "#total_revenue" do
-      it 'calcs total revenue from an invoice for a given merchant' do
-        expect(@invoice1.total_item_revenue_by_merchant(@merchant.id)).to eq(500)
+      it 'calculates total revenue from an invoice for a given merchant' do
+        expect(@invoice1.total_item_revenue_by_merchant(@merchant.id)).to eq(15000)
       end
 
       it 'caluclates total revenue for an invoice' do
-        expect(@invoice1.total_invoice_revenue(@invoice1.id)).to eq(600)
+        expect(@invoice1.total_invoice_revenue(@invoice1.id)).to eq(30000)
       end
     end
 
     it 'caluclates total revenue for an invoice' do
-      expect(@invoice1.total_invoice_revenue_by_item).to eq(600)
+      expect(@invoice1.total_invoice_revenue_by_item).to eq(30000)
     end
 
     it 'can calculate total invoice revenue with bulk discount' do
-      expect(@invoice1.total_invoice_revenue_with_bulk_discounts).to eq(600)
+      expect(@invoice1.total_invoice_revenue_with_bulk_discounts).to eq(26800)
     end
+
   end
 end

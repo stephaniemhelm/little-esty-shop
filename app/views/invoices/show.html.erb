@@ -5,24 +5,23 @@ Created at: <%= @invoice.created_at.strftime("%A, %B %d, %Y") %><br>
 Customer: <%= @invoice.customer.full_name %><br>
 
 <h3>Items</h3>
-<% @invoice.items.each do |item| %>
-  <div id="item-<%= item.id %>">
-    <% if item.merchant == @merchant %>
-      Item name: <%= item.name %><br>
-        <% item.invoice_items.each do |inv_item| %>
-          Quantity sold: <%= inv_item.quantity %><br>
-          Selling price: <%= number_to_currency(inv_item.unit_price.fdiv(100)) %><br>
-          Status: <%= form_with model: [@merchant, inv_item], local: true do |f| %>
-            <%= f.select :status, %w[shipped packaged pending], selected: inv_item.status %>
+<% @invoice.invoice_items.each do |invoice_item| %>
+      Item name: <%= invoice_item.item.name %><br>
+
+          Quantity sold: <%= invoice_item.quantity %><br>
+          Selling price: <%= number_to_currency(invoice_item.unit_price.fdiv(100)) %><br>
+          Status: <%= form_with model: [@merchant, invoice_item], local: true do |f| %>
+            <%= f.select :status, %w[shipped packaged pending], selected: invoice_item.status %>
             <%= f.submit 'Update Item Status' %>
           <% end %>
-        <% end %>
-    <% end %>
-  </div>
+  <%if !invoice_item.best_discount.nil? %>
+          <%= link_to "Best Discount", merchant_discount_path(@merchant,invoice_item.best_discount) %><br><br><br><br>
+  <% end %>
 <% end %><br><br>
 
 <h3>Total Merchant Revenue for this Invoice</h3>
-  <%= number_to_currency(@invoice.total_item_revenue_by_merchant(@merchant.id).fdiv(100)) %>
+  <%= number_to_currency(@invoice.total_invoice_revenue(@invoice.id).fdiv(100)) %>
 <br>
 
 <h3>Total Discounted Revenue for this Invoice</h3>
+  <%= number_to_currency((@invoice.total_invoice_revenue_with_bulk_discounts) / 100) %>

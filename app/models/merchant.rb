@@ -55,4 +55,5 @@ class Merchant < ApplicationRecord
   def merchant_discounts
     discounts
   end
+
 end

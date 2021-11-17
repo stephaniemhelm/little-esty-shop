@@ -38,4 +38,6 @@ class Invoice < ApplicationRecord
       inv_item.invoice_item_total_with_discount
     end
   end
+
+
 end

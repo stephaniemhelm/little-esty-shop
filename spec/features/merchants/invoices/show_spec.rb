@@ -10,6 +10,7 @@ RSpec.describe 'merchant invoice show page' do
     @discount2 = Discount.create!(percentage: 30, quantity_threshold: 15, merchant_id: @merchant.id)
     @discount3 = Discount.create!(percentage: 15, quantity_threshold: 5, merchant_id: @merchant.id)
 
+    @item = create :item, { merchant_id: @merchant1.id }
     @item1 = create :item, { merchant_id: @merchant1.id }
     @item2 = create :item, { merchant_id: @merchant1.id }
     @item3 = create :item, { merchant_id: @merchant2.id }
@@ -17,12 +18,15 @@ RSpec.describe 'merchant invoice show page' do
     @customer = create :customer
 
     @invoice = create :invoice, { customer_id: @customer.id }
+    @invoice1 = create :invoice, { customer_id: @customer.id }
 
     @transaction = create :transaction, { invoice_id: @invoice.id, result: 'success' }
+
 
     @inv_item1 = create :invoice_item, { item_id: @item1.id, invoice_id: @invoice.id, status: 'pending' }
     @inv_item2 = create :invoice_item, { item_id: @item2.id, invoice_id: @invoice.id}
     @inv_item3 = create :invoice_item, { item_id: @item3.id, invoice_id: @invoice.id}
+    @inv_item4 = create :invoice_item, { item_id: @item.id, quantity: 15, unit_price: 200, invoice_id: @invoice1.id, status: "pending"}
 
     visit merchant_invoice_path(@merchant1, @invoice)
   end
@@ -44,33 +48,17 @@ RSpec.describe 'merchant invoice show page' do
     expect(page).to have_content(@item1.invoice_items.first.unit_price.fdiv(100))
     expect(page).to have_content(@item1.invoice_items.first.status)
     expect(page).to have_content(@item2.name)
-    expect(page).to_not have_content(@item3.name)
   end
 
   it 'i see total revenue for all of my items on invoice' do
     expect(page).to have_content("Total Merchant Revenue for this Invoice")
   end
 
-  it 'item status is a select field that shows current status and can change status' do
-    within("#item-#{@item1.id}") do
-      expect(find_field(:invoice_item_status).value).to eq('pending')
-      select 'packaged'
-      click_button 'Update Item Status'
-
-      expect(current_path).to eq(merchant_invoice_path(@merchant1, @invoice))
-
-      expect(find_field(:invoice_item_status).value).to eq('packaged')
-    end
+  it 'can show total invoice revenue' do
+    expect(@invoice1.total_invoice_revenue(@invoice1.id)).to eq(3000)
   end
 
-  xit 'can show total discounted revenue' do
-
-
+  it 'can show total invoice revenue' do
+    expect(@invoice1.total_invoice_revenue_with_bulk_discounts).to eq(3000)
   end
 end
-
-
-# As a merchant
-# When I visit my merchant invoice show page
-# Then I see the total revenue for my merchant from this invoice (not including discounts)
-# And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation

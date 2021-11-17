@@ -61,6 +61,5 @@ RSpec.describe "admin invoice show" do
 
   it 'shows total discounted revenue for this invoice' do
     expect(@invoice8.total_invoice_revenue_with_bulk_discounts).to eq(55300)
-
   end
 end

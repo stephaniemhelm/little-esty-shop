@@ -13,3 +13,22 @@ from _footer.html.erb
     <a class="nav-link disabled">Pull Request Count: <%= GithubService.pr_count %></a>
   </li>
 </ul>
+
+
+<h3>Items</h3>
+<% @invoice.items.each do |item| %>
+  <div id="item-<%= item.id %>">
+
+    <% if item.merchant == @merchant %>
+      Item name: <%= item.name %><br>
+        <% item.invoice_items.each do |inv_item| %>
+          Quantity sold: <%= inv_item.quantity %><br>
+          Selling price: <%= number_to_currency(inv_item.unit_price.fdiv(100)) %><br>
+          Status: <%= form_with model: [@merchant, inv_item], local: true do |f| %>
+            <%= f.select :status, %w[shipped packaged pending], selected: inv_item.status %>
+            <%= f.submit 'Update Item Status' %>
+          <% end %>
+        <% end %>
+    <% end %>
+  </div>
+<% end %><br><br>
